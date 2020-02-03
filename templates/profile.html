@@ -1,0 +1,10 @@
+{% extends "./common/template.html" %}
+
+{% block content %}
+<h1>{{ user.user.first_name }} {{ user.user.last_name }}'s Personal Page</h1>
+{{ user.intro }}
+
+<img src="{{ user.profile_pic }}" alt="" width="100px">  
+<p>Address: {{ user.address }}</p>
+  
+{% endblock %}

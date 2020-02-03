@@ -1,0 +1,127 @@
+{# template for user side site #}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#b3b3b3">
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+		 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<!-- <a class="nav-link" href="/about">About</a> -->
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					 aria-haspopup="true" aria-expanded="false">
+						BOOKS
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/book">All Books</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/book/create">Add Book</a>
+					</div>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto ">
+				{% if user.is_authenticated %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+							Hi, {{ user.username }}
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+						</div>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'login' %}">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'register' %}">Register</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		{% block content %}{% endblock %}
+	</div>
+	<br>
+	<div class ="jumbotron text-mute">
+		<footer>
+			<div class="row">
+				<div class="col-sm-2">
+
+				</div>
+				<div class="col-sm-4">
+					<h4 class="text-muted">Developed by an INIAD Group Student</h4>
+					<br>
+					
+					<h6>Team members:</h6>
+					<ul>
+						<li>Vu Dang</li>
+						<li>Van Nam</li>
+						<li>Duc Tuan</li>
+					</ul>
+				</div>
+				<div class="col-sm-4">
+						<div id="accordion">
+								<div class="card">
+								  <div class="card-header">
+									<a class="card-link" data-toggle="collapse" href="#collapseOne">
+									  FIND US:
+									</a>
+								  </div>
+								  <div id="collapseOne" class="collapse show" data-parent="#accordion">
+									<div class="card-body">
+										<ul>
+											<li>Address: Akabane, Tokyo, Japan.</li>
+											<li>Email: nobodycareright@gmail.com</li>
+										</ul>
+									</div>
+								  </div>
+								</div>
+								<div class="card">
+								  <div class="card-header">
+									<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+									CALL US:
+								  </a>
+								  </div>
+								  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+									<div class="card-body">
+									  <ul>
+										  <li>Phone:+817854231</li>
+										<li>Fax:617-7431-6005</li>
+									  </ul>
+									</div>
+								  </div>
+								</div>  
+							  </div>
+				</div>
+				<div class="col-sm-2"></div>
+			</div>
+		</footer>
+</div>
+</body>
+
+</html>
