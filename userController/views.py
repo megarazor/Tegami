@@ -1,21 +1,46 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
-from .forms import ExtendedUserCreationFrom, ProfileForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileForm
 from .models import Profile
 
 def home(request):
     return render(request, 'home.html')
 
+def logging_in(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('home')
+        else:
+            messages.error(request,'Username and password didn\'t match')
+            return redirect('login')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
 @login_required
-def profile(request):
-    profile= Profile.objects.get(user=request.user)
-    context= {'user': profile}
+def logging_out(request):
+    logout(request)
+    return redirect('home')
+
+@login_required
+def profile(request):    
+    profile= Profile.objects.get(user=request.user)    
+    context= {'profile': profile}
     return render(request, 'profile.html', context)
 
 def register(request):
     if (request.method=='POST'):
-        user_form= ExtendedUserCreationFrom(request.POST)
+        user_form= ExtendedUserCreationForm(request.POST)
         profile_form= ProfileForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -25,21 +50,56 @@ def register(request):
             profile.save()
 
             username= user_form.cleaned_data.get('username')
-            password= user_form.cleaned_data.get('password')
+            password= user_form.cleaned_data.get('password1')
             user= authenticate(username=username, password=password)
             login(request, user)
             return redirect('home')
     else:
-        user_form= ExtendedUserCreationFrom()
+        user_form= ExtendedUserCreationForm()
         profile_form= ProfileForm()
     
     context= {'user_form': user_form, 'profile_form': profile_form}
     return render(request, 'register.html', context)
 
-# def login(request):
-#     if (request.method == 'POST'):
-#         user = authenticate(username=request.POST['username'], password=request.POST['password'])
-#         if user is not None:
-#             # A backend authenticated the credentials
-#         else:
-#             # No backend authenticated the credentials
+@login_required
+def settings(request):
+    return render(request, 'settings/settings.html')
+
+@login_required
+def edit_info(request):
+    if (request.method=='POST'):
+        user_form= ExtendedUserEditionForm(request.POST)
+        profile_form= ProfileForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            profile= Profile.objects.get(user=request.user)
+            profile.user.email= user_form.cleaned_data.get('email')
+            profile.user.first_name= user_form.cleaned_data.get('first_name')
+            profile.user.last_name= user_form.cleaned_data.get('last_name')
+            profile.gender= profile_form.cleaned_data.get('gender')
+            profile.DoB= profile_form.cleaned_data.get('DoB')
+            profile.country= profile_form.cleaned_data.get('country')
+            profile.intro= profile_form.cleaned_data.get('intro')
+            profile.address= profile_form.cleaned_data.get('address')
+            profile.profile_pic= profile_form.cleaned_data.get('profile_pic')
+            profile.user.save()
+            profile.save()
+            return redirect('profile')
+    else:
+        user_form= ExtendedUserEditionForm()
+        profile_form= ProfileForm()
+    
+    context= {'user_form': user_form, 'profile_form': profile_form}
+    return render(request, 'settings/info.html', context)
+
+@login_required
+def edit_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+    
+    form= PasswordChangeForm(user=request.user)
+    context= {'form': form}
+    return render(request, 'settings/password.html', context)

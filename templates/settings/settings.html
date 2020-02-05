@@ -1,0 +1,7 @@
+{% extends "./../common/template.html" %}
+
+{% block content %}
+    <h1>Account Settings</h1>
+    <a href="{% url 'edit_info' %}">Information Update</a>
+    <a href="{% url 'edit_password' %}">Password Update</a>
+{% endblock %}

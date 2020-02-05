@@ -20,7 +20,6 @@ from userController import views as userView
 urlpatterns = [
     path('', userView.home, name='home'),
     path('admin/', admin.site.urls),
-    path('accounts/register/', userView.register, name="register"),
-    path('accounts/profile/', userView.profile, name='profile'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('account/', include('userController.urls')),
+    # path('account/', include('django.contrib.auth.urls')),
 ]

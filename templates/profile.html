@@ -1,10 +1,12 @@
 {% extends "./common/template.html" %}
 
 {% block content %}
-<h1>{{ user.user.first_name }} {{ user.user.last_name }}'s Personal Page</h1>
-{{ user.intro }}
 
-<img src="{{ user.profile_pic }}" alt="" width="100px">  
-<p>Address: {{ user.address }}</p>
+    {% csrf_token %}
+<h1>{{ profile.user.first_name }} {{ profile.user.last_name }}'s Personal Page</h1>
+{{ profile.intro }}
+
+<img src="{{ profile.profile_pic }}" alt="" width="100px">  
+<p>Address: {{ profile.address }}</p>
   
 {% endblock %}
