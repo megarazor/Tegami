@@ -29,3 +29,10 @@ class Profile(models.Model):
 class Language(models.Model):
     lang_code = models.IntegerField(default=0)
     speaker = models.ForeignKey(User, related_name="language", on_delete=models.CASCADE, default=0)
+
+class Notifications(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    time= models.DateTimeField()
+    content= models.TextField(max_length=200)
+    read= models.BooleanField()
+    url= models.URLField()

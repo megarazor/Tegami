@@ -175,10 +175,11 @@ body {
   <a href="{% url 'home' %}">Home</a>
   <a href="{% url 'profile' %}">Profile</a>
   <a href="{% url 'current_pals' %}">Your Pen Pals</a>
-  <a href="{% url '#' %}">Find someone new</a>
+  <a href="{% url 'new_match' %}">Find someone new</a>
   {% if user.is_authenticated %}
     <a href="{% url 'logout' %}" class="right">Logout</a>
     <a href="{% url 'settings' %}" class="right">Settings</a>
+    <a href="{% url 'notifications' %}" class="right">Notifications({{ user.notifications.count }})</a>
     <a href="{% url 'profile' %}" class="right">Welcome, {{ user.first_name }}!</a>
   {% else %}
     <a href="{% url 'register' %}" class="right">Register</a>

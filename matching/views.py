@@ -12,6 +12,12 @@ def current_pals(request):
     return render(request, 'matching/current.html', context)
 
 @login_required
+def matching(request):
+    matches= Profile.objects.all()
+    context= {'matches': matches}
+    return render(request, 'matching/results.html', context)
+
+@login_required
 def add_or_remove_pals(request, username, verb):
     n_p = get_object_or_404(User, username=username)
     owner = request.user.userprofile
@@ -25,3 +31,4 @@ def add_or_remove_pals(request, username, verb):
         PalList.remove_pal(owner, new_pal)
 
     return redirect(new_pal.get_absolute_url())
+

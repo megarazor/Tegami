@@ -1,0 +1,17 @@
+{% extends "./common/template.html" %}
+
+{% block content %}
+    </br>
+    <h1>Notifications</h1>
+    </br>
+    {% csrf_token %}
+    {% if notifications %}
+        <p>List:</p>
+        {% for noti in notifications %}
+            <p>At {{ noti.time }}: {{ noti.content }} <a href="{{ noti.url }}">See more</a></p>
+        {% endfor %}
+    {% else %}
+        <p>No notifications to display.</p>
+    {% endif %}
+  
+{% endblock %}

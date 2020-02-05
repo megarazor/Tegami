@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileForm
+from django.contrib.auth.models import User
 from .models import Profile
 
 def home(request):
@@ -35,6 +36,12 @@ def logging_out(request):
 @login_required
 def profile(request):    
     profile= Profile.objects.get(user=request.user)    
+    context= {'profile': profile}
+    return render(request, 'profile.html', context)
+
+def profile_other(request, username):
+    user= User.objects.get(username=username)    
+    profile= Profile.objects.get(user=user)    
     context= {'profile': profile}
     return render(request, 'profile.html', context)
 
@@ -103,3 +110,10 @@ def edit_password(request):
     form= PasswordChangeForm(user=request.user)
     context= {'form': form}
     return render(request, 'settings/password.html', context)
+
+@login_required
+def notifications_view(request):
+    current_user= request.user
+    notifications= current_user.notifications.all()
+    context= {'notifications': notifications}
+    return render(request, 'notifications.html', context)
