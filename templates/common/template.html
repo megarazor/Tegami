@@ -174,7 +174,8 @@ body {
 <div class="navbar">
   <a href="{% url 'home' %}">Home</a>
   <a href="{% url 'profile' %}">Profile</a>
-  <a href="#">Find your Pen Pal</a>
+  <a href="{% url 'current_pals' %}">Your Pen Pals</a>
+  <a href="{% url '#' %}">Find someone new</a>
   {% if user.is_authenticated %}
     <a href="{% url 'logout' %}" class="right">Logout</a>
     <a href="{% url 'settings' %}" class="right">Settings</a>

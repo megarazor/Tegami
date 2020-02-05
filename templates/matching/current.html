@@ -1,0 +1,17 @@
+{% extends "./../common/template.html" %}
+
+{% block content %}
+    </br>
+    <h1>Your matched Pen Pals</h1>
+    </br>
+    {% csrf_token %}
+    {% if pal_list.pal_list %}
+        <p>List:</p>
+        {% for pal in pal_list.pal_list.all %}
+            <p>{{ pal }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No pen pals to display.</p>
+    {% endif %}
+  
+{% endblock %}
