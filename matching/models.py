@@ -38,4 +38,3 @@ class MatchRequest(models.Model):
     def create(cls, requester, receiver):
         request= cls(requester=requester, receiver=receiver, time=datetime.datetime.now())
         return request
-

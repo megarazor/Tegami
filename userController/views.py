@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileForm
+from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileForm, LANGUAGE_CODE
 from django.contrib.auth.models import User
 from .models import Profile
 from matching.models import MatchRequest, PalList
@@ -36,8 +36,12 @@ def logging_out(request):
 
 @login_required
 def profile(request):    
-    profile= Profile.objects.get(user=request.user)    
-    context= {'profile': profile}
+    profile= Profile.objects.get(user=request.user)  
+    lang_list= profile.languages_get_as_list()
+    lang_list_decoded= []
+    for lang in lang_list:
+        lang_list_decoded.append(LANGUAGE_CODE[lang])
+    context= {'profile': profile, 'lang_list': lang_list_decoded}
     return render(request, 'profile.html', context)
 
 @login_required
@@ -56,11 +60,16 @@ def profile_other(request, username):
     except MatchRequest.DoesNotExist:
         received_match_request= None
     is_pal= PalList.is_pal(current_profile, profile)
+    lang_list= profile.languages_get_as_list()
+    lang_list_decoded= []
+    for lang in lang_list:
+        lang_list_decoded.append(LANGUAGE_CODE[lang])
     context= {
         'profile': profile,
         'sent_request': sent_match_request, 
         'received_request': received_match_request, 
-        'is_pal': is_pal
+        'is_pal': is_pal,
+        'lang_list': lang_list_decoded
         }
     return render(request, 'profile_other.html', context)
 
@@ -74,6 +83,24 @@ def register(request):
             profile= profile_form.save(commit=False)
             profile.user= user
             profile.save()
+
+            language1= profile_form.cleaned_data['language1']
+            language2= profile_form.cleaned_data['language2']
+            language3= profile_form.cleaned_data['language3']
+            language4= profile_form.cleaned_data['language4']
+            language5= profile_form.cleaned_data['language5']
+            languages= []
+            if language1 != '--':
+                languages.append(language1)
+            if language2 != '--':
+                languages.append(language2)
+            if language3 != '--':
+                languages.append(language3)
+            if language4 != '--':
+                languages.append(language4)
+            if language5 != '--':
+                languages.append(language5)
+            Profile.languages_set_from_list(profile, languages)
 
             username= user_form.cleaned_data.get('username')
             password= user_form.cleaned_data.get('password1')
@@ -110,6 +137,24 @@ def edit_info(request):
             profile.profile_pic= profile_form.cleaned_data.get('profile_pic')
             profile.user.save()
             profile.save()
+            language1= profile_form.cleaned_data['language1']
+            language2= profile_form.cleaned_data['language2']
+            language3= profile_form.cleaned_data['language3']
+            language4= profile_form.cleaned_data['language4']
+            language5= profile_form.cleaned_data['language5']
+            languages= []
+            if language1 != '--':
+                languages.append(language1)
+            if language2 != '--':
+                languages.append(language2)
+            if language3 != '--':
+                languages.append(language3)
+            if language4 != '--':
+                languages.append(language4)
+            if language5 != '--':
+                languages.append(language5)
+            Profile.languages_set_from_list(profile, languages)
+            
             return redirect('profile')
     else:
         user_form= ExtendedUserEditionForm()

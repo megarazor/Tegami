@@ -13,15 +13,20 @@ From {{ profile.country }}
 <br>
 Intro: {{ profile.intro }}
 <br>
+Spoken languages:
+<br>
+{% for lang in lang_list %}
+　　- {{ lang }} <br>
+{% endfor %}
 {% if profile.gender == 0 %}
     Gender: Female
 {% else %}
     Gender: Male
 {% endif %}
-<br><br>
+<br>
 {% if is_pal == 1 %}
     Address: {{ profile.address }}
-    <br>
+    <br><br>
     {{ profile.user.first_name }} is your Pen Pal. Tired? <a href="{% url 'matching_remove_confirm' profile.user.username %}">Remove them from your list</a>.
 {% elif received_request %}
     {{ profile.user.first_name }} has sent you a Pen Pal request. <a href="{% url 'respond_match_request' request_id=received_request.id verb='accept' %}">Accept the request</a> to give them your address, or <a href="{% url 'respond_match_request' request_id=received_request.id verb='decline' %}">decline</a>.

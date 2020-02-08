@@ -15,29 +15,44 @@ def current_pals(request):
     return render(request, 'matching/current.html', context)
 
 @login_required
-def matching(request, country, gender, min_age, max_age):
+def matching(request, country, gender, min_age, max_age, lang_list):
     matches= Profile.objects.exclude(user=request.user)
-    print("*** QUERY: ", country, gender, min_age, max_age)
-    print("*** ", matches)
-    if country != '--':
-        print("*** Filtering country....")
+    if country != '--': # Filter by country
         matches= matches.filter(country=country)
-    print("*** ", matches)
-    if gender != '2':
-        print("*** Filtering gender....")
+    if gender != '2': # Filter by gender
         matches= matches.filter(gender=gender)
-    print("*** ", matches)
-    age_exclude= []
+    to_be_exclude= []
     today=datetime.date.today()
-    print("*** Filtering age....")
-    for match in matches:
-        born= match.DoB
-        age= today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-        print("Age: ", age)
-        if (age < min_age) or (age > max_age):
-            age_exclude.append(match.id)
-    matches= matches.exclude(id__in=age_exclude)
-    print("*** ", matches)
+    current_profile= request.user.profile
+    if (lang_list != 'none'):
+        query_lang_list= lang_list.split(",")
+        for match in matches:
+            # Filter by age range
+            # Filter out people who are already pals
+            # Filter by languages
+            born= match.DoB
+            age= today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+            match_lang_list= match.languages_get_as_list()
+            if (age < min_age) or (age > max_age):
+                to_be_exclude.append(match.id)
+            elif not any(lang in query_lang_list for lang in match_lang_list):
+                print("**** NOT COMMON")
+                print("query_lang_list: ", query_lang_list)
+                print("match_lang_list: ", match_lang_list)
+                to_be_exclude.append(match.id)
+            elif PalList.is_pal(current_profile, match):
+                to_be_exclude.append(match.id)
+    else:
+        for match in matches:
+            # Filter by age range
+            # Filter out people who are already pals
+            born= match.DoB
+            age= today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+            if (age < min_age) or (age > max_age):
+                to_be_exclude.append(match.id)
+            elif PalList.is_pal(current_profile, match):
+                to_be_exclude.append(match.id)
+    matches= matches.exclude(id__in=to_be_exclude)
     context= {'matches': matches}
     return render(request, 'matching/results.html', context)
 
@@ -118,7 +133,22 @@ def matching_query(request):
         max_age = request.POST['max_age']
         if max_age == '':
             max_age= 150
-        return redirect('matching', country, gender, min_age, max_age)
+        lang_list= ""
+        if request.POST['language1'] != '--':
+            lang_list+= request.POST['language1'] + ','
+        if request.POST['language2'] != '--':
+            lang_list+= request.POST['language2'] + ','
+        if request.POST['language3'] != '--':
+            lang_list+= request.POST['language3'] + ','
+        if request.POST['language4'] != '--':
+            lang_list+= request.POST['language4'] + ','
+        if request.POST['language5'] != '--':
+            lang_list+= request.POST['language5'] + ','
+        if lang_list == "":
+            lang_list= 'none'
+        else:
+            lang_list= lang_list[:-1]
+        return redirect('matching', country, gender, min_age, max_age, lang_list)
     return render(request, 'matching/query.html')
 
 @login_required
@@ -139,3 +169,4 @@ def matching_remove_confirm(request, username):
     target_profile= target_user.profile
     context= {'profile': target_profile}
     return render(request, 'matching/remove_confirm.html', context)
+

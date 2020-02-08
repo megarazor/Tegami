@@ -12,6 +12,11 @@ From {{ profile.country }}
 <br>
 Intro: {{ profile.intro }}
 <br>
+Spoken languages:
+<br>
+{% for lang in lang_list %}
+　　- {{ lang }} <br>
+{% endfor %}
 {% if profile.gender == 0 %}
     Gender: Female
 {% else %}

@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.current_pals, name='current_pals'),
-    path('new/country=<str:country>/gender=<str:gender>/age=<int:min_age>~<int:max_age>/', views.matching, name='matching'),
+    path('new/country=<str:country>/gender=<str:gender>/age=<int:min_age>~<int:max_age>/lang=<str:lang_list>/', views.matching, name='matching'),
     path('query/', views.matching_query, name='matching_query'),
     path('<str:username>/confirm/', views.matching_confirm, name='matching_confirm'),
     path('<str:username>/confirm/yes/', views.send_match_request, name='send_match_request'),
