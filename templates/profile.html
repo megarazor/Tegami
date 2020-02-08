@@ -3,10 +3,22 @@
 {% block content %}
 
     {% csrf_token %}
-<h1>{{ profile.user.first_name }} {{ profile.user.last_name }}'s Personal Page</h1>
-{{ profile.intro }}
-
+<h1>{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
 <img src="{{ profile.profile_pic }}" alt="" width="100px">  
-<p>Address: {{ profile.address }}</p>
+<br>
+Date of Birth: {{ profile.DoB }}
+<br>
+From {{ profile.country }}
+<br>
+Intro: {{ profile.intro }}
+<br>
+{% if profile.gender == 0 %}
+    Gender: Female
+{% else %}
+    Gender: Male
+{% endif %}
+<br>
+
+
   
 {% endblock %}

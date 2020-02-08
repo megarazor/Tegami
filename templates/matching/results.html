@@ -1,14 +1,11 @@
 {% extends "./../common/template.html" %}
 
 {% block content %}
-    </br>
     <h1>List of Pen Pals for you</h1>
-    </br>
     {% csrf_token %}
     {% if matches %}
-        <p>List:</p>
         {% for match in matches %}
-            <p><img src="{{ match.profile_pic }}" alt="" width="100px", height="100px"> <a href="../account/profile/{{ match.user.username }}">{{ match.user.username }}</a></p>
+            <p><img src="{{ match.profile_pic }}" alt="" width="100px", height="100px"> <a href="{% url 'profile_other' match.user.username %}">{{ match.user.first_name }} {{ match.user.last_name }}</a></p>
         {% endfor %}
     {% else %}
         <p>No candidates to display.</p>

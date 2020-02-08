@@ -162,24 +162,37 @@ body {
     width: 100%;
   }
 }
+
+/* Slideshow style */
+.mySlides {display:none}
+.w3-left, .w3-right, .w3-badge {cursor:pointer}
+.w3-badge {height:13px;width:13px;padding:0}
+.slide_panel {
+  padding: 160px;
+  text-align: center;
+  background: #086b72;
+  color: white;
+}
+
 </style>
+
 </head>
 <body>
-
+<a href="{% url 'home' %}" style="text-decoration: none;">
 <div class="header">
   <h1>Tegami</h1>
-  <p>Where you find your best Pen Pal.</p>
-</div>
+  <p>Connects people with paper letters.</p>
+</div></a>
 
 <div class="navbar">
   <a href="{% url 'home' %}">Home</a>
   <a href="{% url 'profile' %}">Profile</a>
   <a href="{% url 'current_pals' %}">Your Pen Pals</a>
-  <a href="{% url 'new_match' %}">Find someone new</a>
+  <a href="{% url 'matching_query' %}">Find someone new</a>
   {% if user.is_authenticated %}
     <a href="{% url 'logout' %}" class="right">Logout</a>
     <a href="{% url 'settings' %}" class="right">Settings</a>
-    <a href="{% url 'notifications' %}" class="right">Notifications({{ user.notifications.count }})</a>
+    <a href="{% url 'notifications' %}" class="right">Notifications({{ user.profile.count_unread_notis }})</a>
     <a href="{% url 'profile' %}" class="right">Welcome, {{ user.first_name }}!</a>
   {% else %}
     <a href="{% url 'register' %}" class="right">Register</a>
@@ -193,7 +206,11 @@ body {
 </div>
 
 <div class="footer">
-  <h2>Tegami - a project by Nam</h2>
+  <h3>Tegami – a personal project</h3>
+  Contact: PHAM Van Nam <br>
+  Email: vannampham1301@gmail.com<br>
+  Phone: (+81)080-8750-5337
+
 </div>
 
 </body>

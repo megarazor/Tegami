@@ -1,0 +1,36 @@
+{% extends "./common/template.html" %}
+
+{% block content %}
+
+    {% csrf_token %}
+<h1>{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+<br>
+<img src="{{ profile.profile_pic }}" alt="" width="100px">  
+<br>
+Date of Birth: {{ profile.DoB }}
+<br>
+From {{ profile.country }}
+<br>
+Intro: {{ profile.intro }}
+<br>
+{% if profile.gender == 0 %}
+    Gender: Female
+{% else %}
+    Gender: Male
+{% endif %}
+<br><br>
+{% if is_pal == 1 %}
+    Address: {{ profile.address }}
+    <br>
+    {{ profile.user.first_name }} is your Pen Pal. Tired? <a href="{% url 'matching_remove_confirm' profile.user.username %}">Remove them from your list</a>.
+{% elif received_request %}
+    {{ profile.user.first_name }} has sent you a Pen Pal request. <a href="{% url 'respond_match_request' request_id=received_request.id verb='accept' %}">Accept the request</a> to give them your address, or <a href="{% url 'respond_match_request' request_id=received_request.id verb='decline' %}">decline</a>.
+    <br>
+{% elif sent_request %}
+    You already sent this user a Pen Pal request on {{ sent_request.time }}. Please be patient.
+{% else %}
+    Want to write {{ profile.user.first_name }} a letter? <a href="{% url 'matching_confirm' profile.user.username %}">Send Pen Pal request</a>.
+{% endif %}
+
+  
+{% endblock %}

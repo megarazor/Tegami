@@ -1,0 +1,9 @@
+{% extends "./../common/template.html" %}
+
+{% block content %}
+
+<h1>You've sent {{ receiver.user.first_name }} {{ receiver.user.last_name }} a Pen Pal request.</h1>
+<p><a href="{% url 'home' %}">Back to Homepage</a> or <a href="{% url 'matching_query' %}">keep finding Pen Pals</a>.</p>
+
+  
+{% endblock %}

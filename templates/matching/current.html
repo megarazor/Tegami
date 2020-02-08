@@ -1,14 +1,10 @@
 {% extends "./../common/template.html" %}
 
 {% block content %}
-    </br>
     <h1>Your matched Pen Pals</h1>
-    </br>
-    {% csrf_token %}
-    {% if pal_list.pal_list %}
-        <p>List:</p>
-        {% for pal in pal_list.pal_list.all %}
-            <p>{{ pal }}</p>
+    {% if pal_list %}
+        {% for pal in pal_list %}
+            <p><img src="{{ pal.profile_pic }}" alt="" width="100px", height="100px"><a href="{% url 'profile_other' pal.user.username %}">{{ pal.user.first_name }} {{ pal.user.last_name }}</a></p>
         {% endfor %}
     {% else %}
         <p>No pen pals to display.</p>

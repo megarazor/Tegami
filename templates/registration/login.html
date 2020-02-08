@@ -1,33 +1,25 @@
 {% extends "./../common/template.html" %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-4">		</div>
-  <div class="col-md-4 text-center">		
-      
-  </br>
-    <h1>Log in</h1>
-    </br>
-    <form method = "post">
-      {% csrf_token %}
-      {% for message in messages %}
-        <div class="alert">
-            {{ message }}
-        </div>
-      {% endfor %}
-      <div class="input-group mb-3">
-        <span class="input-group-text">Username</span>
-        <input class="form-control" type="text" name="username" autofocus="" required="" id="id_username">
-      </div>
-        
-      <div class="input-group mb-3">
-        <span class="input-group-text">Password</span>
-        <input class="form-control" type="password" name="password" autofocus="" required="" id="id_password">
-      </div>
-      <button type="submit" class="btn btn-primary">Log in</button>
-    </form>
+<h1>Log in</h1>
+</br>
+<form method = "post">
+  {% csrf_token %}
+  {% for message in messages %}
+    <div class="alert">
+        {{ message }}
+    </div>
+  {% endfor %}
+  <div class="input-group mb-3">
+    <span class="input-group-text">Username</span>
+    <input class="form-control" type="text" name="username" autofocus="" required="" id="id_username">
   </div>
-  <div class="col-md-4">		</div>
-</div>
+    
+  <div class="input-group mb-3">
+    <span class="input-group-text">Password</span>
+    <input class="form-control" type="password" name="password" autofocus="" required="" id="id_password">
+  </div>
+  <button type="submit" class="btn btn-primary">Log in</button>
+</form>
   
 {% endblock %}

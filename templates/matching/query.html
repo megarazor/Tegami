@@ -1,0 +1,42 @@
+{% extends "./../common/template.html" %}
+
+{% block content %}
+
+<h1>What kind of Pen Pal are you looking for?</h1>
+
+{% csrf_token %}
+<form action="{% url 'matching_query' %}" method="post">
+    {% csrf_token %}
+    <span for="title">Country</span>
+    <select name="country">
+        <option value="--">Any</option>
+        <option value="JP">Japan</option>
+        <option value="VN">Vietnam</option>
+    </select>
+    <br>
+
+    <span for="gender">Gender</span>
+    <select name="gender">
+        <option value=2>Any</option>
+        <option value=0>Female</option>
+        <option value=1>Male</option>
+    </select>
+    <br>
+
+    <span for="min_age">From</span>
+    <input type="number" name="min_age" id="min_age" min="6" max="150">
+    <span for="max_age"">to</span>
+    <input type="number" name="max_age" id="max_age" min="6" max="150">
+    years old.
+    <br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<!-- <script>
+    function myFunction() {
+      document.getElementById("min_age").defaultValue = 18;
+      document.getElementById("min_age").defaultValue = 150;
+    }
+</script> -->
+{% endblock %}

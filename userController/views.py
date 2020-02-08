@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileForm
 from django.contrib.auth.models import User
 from .models import Profile
+from matching.models import MatchRequest, PalList
 
 def home(request):
     return render(request, 'home.html')
@@ -39,11 +40,29 @@ def profile(request):
     context= {'profile': profile}
     return render(request, 'profile.html', context)
 
+@login_required
 def profile_other(request, username):
-    user= User.objects.get(username=username)    
+    if (username == request.user.username):
+        return redirect('profile')
+    user= User.objects.get(username=username)
     profile= Profile.objects.get(user=user)    
-    context= {'profile': profile}
-    return render(request, 'profile.html', context)
+    current_profile= Profile.objects.get(user=request.user)
+    try:
+        sent_match_request= MatchRequest.objects.get(requester=current_profile, receiver=profile)
+    except MatchRequest.DoesNotExist:
+        sent_match_request= None
+    try:
+        received_match_request= MatchRequest.objects.get(requester=profile, receiver=current_profile)
+    except MatchRequest.DoesNotExist:
+        received_match_request= None
+    is_pal= PalList.is_pal(current_profile, profile)
+    context= {
+        'profile': profile,
+        'sent_request': sent_match_request, 
+        'received_request': received_match_request, 
+        'is_pal': is_pal
+        }
+    return render(request, 'profile_other.html', context)
 
 def register(request):
     if (request.method=='POST'):
@@ -115,5 +134,10 @@ def edit_password(request):
 def notifications_view(request):
     current_user= request.user
     notifications= current_user.notifications.all()
+    for noti in notifications:
+        if noti.read==False:
+            noti.read=True
+            noti.save()
     context= {'notifications': notifications}
     return render(request, 'notifications.html', context)
+
