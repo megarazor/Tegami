@@ -1,23 +1,14 @@
-{% extends "./../common/template.html" %}
+{% extends "./../common/settings_base.html" %}
 
-{% block content %}
+{% block settings_content %}
 
-
-<div class="row">
-	<div class="col-md-4">
-    </br>
-        <h1>Edit user information</h1>
-        </br>
-        <form method="POST" action="{% url 'edit_info' %}">
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type="submit" value= "Update">
-        </form>
-    </div>
-
-    <div class="col-md-4"></div>
-</div>
+<h1>Edit user information</h1>
+<form method="POST" action="{% url 'edit_info' %}">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <input type="submit" value= "Update">
+</form>
 
 
     

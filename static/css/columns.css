@@ -1,0 +1,20 @@
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.col_left {
+  width: 25%;
+}
+
+.col_right {
+  width: 75%;
+}
+
+/* Clear floats after the columns */
+.col_row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

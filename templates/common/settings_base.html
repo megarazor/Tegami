@@ -1,0 +1,21 @@
+{% extends "./../common/template.html" %}
+
+{% block content %}
+
+<h1>Settings</h1>
+<div class="col_row">
+    <div class="column col_left">
+      <a href="{% url 'edit_info' %}"><h2>Information</h2></a>
+      <a href="{% url 'edit_password' %}"><h2>Password</h2></a>
+    </div>
+    <div class="column col_right">
+        <div>
+            {% block settings_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}            
+            
+<!-- Needs 3 </div> -->
