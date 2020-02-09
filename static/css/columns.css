@@ -1,0 +1,32 @@
+.col-container {
+  display: table; /* Make the container element behave like a table */
+  width: 100%; /* Set full-width to expand the whole page */
+}
+
+.col-colored {
+  color: white;
+  background-color:#1abc9c;
+  padding: 75px;
+  display: table-cell; /* Make elements inside the container behave like table cells */
+}
+
+.col {
+  padding: 75px;
+  display: table-cell; /* Make elements inside the container behave like table cells */
+}
+
+.col-settings-left {
+  width: 30%;
+}
+
+.col-settings-right {
+  width: 70%;
+}
+
+.col-profile-left {
+  width: 40%;
+}
+
+.col-profile-right {
+  width: 60%;
+}

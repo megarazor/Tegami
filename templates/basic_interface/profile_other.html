@@ -3,17 +3,17 @@
 {% block extra_head_content %}
   <title>{{profile.user.first_name}} {{ profile.user.last_name }} | Tegami</title>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/columns_profile.css' %}">
+  <link rel="stylesheet" href="{% static 'css/columns.css' %}">
 {% endblock %}
 
 {% block content %}
 <div>
     <div class="col-container">
-        <div class="col" style="background-color:#1abc9c;">
+        <div class="col-colored col-profile-left">
             <br><br>
             <img class="center-cropped-big profile-picture" src="{{ profile.profile_pic }}" alt="">  
         </div>
-        <div class="col">
+        <div class="col col-profile-right">
             <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
             Date of Birth: {{ profile.DoB }}
             <br>
