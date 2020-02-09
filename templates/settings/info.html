@@ -1,18 +1,13 @@
 {% extends "./../common/settings_base.html" %}
 
-{% block extra_head_content %}
-  <title>Information Update | Tegami</title>
-{% endblock %}
-
 {% block settings_content %}
 
+<h1>Edit user information</h1>
 {% for message in messages %}
 <div class="alert">
     {{ message }}
 </div>
 {% endfor %}
-
-<h1>Edit user information</h1>
 <form method="POST" action="{% url 'edit_info' %}">
     {% csrf_token %}
     {{ user_form.as_p }}

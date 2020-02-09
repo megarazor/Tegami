@@ -155,3 +155,21 @@ body {
     width: 100%;
   }
 }
+
+.annotation {
+  font-size: 11px;
+  font-style: italic;
+  padding-left: 12px;
+}
+
+.center-cropped-big {
+  width:250px;
+  height:250px;
+  object-fit:cover;
+}
+
+.profile-picture {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

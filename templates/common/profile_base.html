@@ -1,0 +1,47 @@
+{% extends "./../common/template.html" %}
+
+{% block extra_head_content %}
+  <title>{{profile.user.first_name}} {{ profile.user.last_name }} | Tegami</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/columns_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="col_row">
+    <div class="column col_left">
+        <img src="{{ profile.profile_pic }}" alt="" width="100px">  
+    </div>
+    <div class="column col_right">
+        <div>
+            {% block settings_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<h1>{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+<img src="{{ profile.profile_pic }}" alt="" width="100px">  
+<br>
+Date of Birth: {{ profile.DoB }}
+<br>
+From {{ profile.country }}
+<br>
+Intro: {{ profile.intro }}
+<br>
+Spoken languages:
+<br>
+{% for lang in lang_list %}
+　　- {{ lang }} <br>
+{% endfor %}
+{% if profile.gender == 0 %}
+    Gender: Female
+{% else %}
+    Gender: Male
+{% endif %}
+<br>
+<br>
+<a href="{% url 'edit_info' %}">Edit your profile</a>
+<br>
+  
+{% endblock %}

@@ -2,33 +2,47 @@
 
 {% block extra_head_content %}
   <title>{{profile.user.first_name}} {{ profile.user.last_name }} | Tegami</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/columns_profile.css' %}">
 {% endblock %}
 
 {% block content %}
+<div>
+    <div class="col-container">
+        <div class="col" style="background-color:#1abc9c;">
+            <br><br>
+            <img class="center-cropped-big profile-picture" src="{{ profile.profile_pic }}" alt="">  
+        </div>
+        <div class="col">
+            <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
+            Date of Birth: {{ profile.DoB }}
+            <br>
+            {% if profile.gender == 0 %}
+                Gender: Female
+            {% else %}
+                Gender: Male
+            {% endif %}
+            <br>
+            From {{ country }}
+            <br>
+            Address: {{ profile.address }}
+            <br>
+            <div class="annotation">Only Pen Pals in <a href="{% url 'current_pals' %}">your list</a> can see your address</div>
+            Intro: {{ profile.intro }}
+            <br>
+            Spoken languages:
+            <ul>
+                {% for lang in lang_list %}
+                <li>{{ lang }}</li>
+                {% endfor %}
+            </ul>
+            <br>
+            <a href="{% url 'edit_info' %}">Edit your profile</a>
+            <br>
+        </div>
+    </div>
+</div>
 
-    {% csrf_token %}
-<h1>{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
-<img src="{{ profile.profile_pic }}" alt="" width="100px">  
-<br>
-Date of Birth: {{ profile.DoB }}
-<br>
-From {{ profile.country }}
-<br>
-Intro: {{ profile.intro }}
-<br>
-Spoken languages:
-<br>
-{% for lang in lang_list %}
-　　- {{ lang }} <br>
-{% endfor %}
-{% if profile.gender == 0 %}
-    Gender: Female
-{% else %}
-    Gender: Male
-{% endif %}
-<br>
-<br>
-<a href="{% url 'edit_info' %}">Edit your profile</a>
-<br>
+
   
 {% endblock %}

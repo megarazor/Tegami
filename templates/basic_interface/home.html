@@ -2,18 +2,8 @@
 
 {% block extra_head_content %}
   <title>Homepage | Tegami</title>
-  <style>
-    /* Slideshow style */
-    .mySlides {display:none}
-    .w3-left, .w3-right, .w3-badge {cursor:pointer}
-    .w3-badge {height:13px;width:13px;padding:0}
-    .slide_panel {
-      padding: 160px;
-      text-align: center;
-      background: #086b72;
-      color: white;
-    }
-  </style>
+  {% load static %}
+<link rel="stylesheet" href="{% static 'css/slideshow.css' %}">
 {% endblock %}
 
 

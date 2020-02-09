@@ -41,7 +41,7 @@ def profile(request):
     lang_list_decoded= []
     for lang in lang_list:
         lang_list_decoded.append(LANGUAGE_CODE[lang])
-    context= {'profile': profile, 'lang_list': lang_list_decoded}
+    context= {'profile': profile, 'lang_list': lang_list_decoded, 'country': profile.country_get_as_string()}
     return render(request, 'basic_interface/profile.html', context)
 
 @login_required
@@ -69,7 +69,8 @@ def profile_other(request, username):
         'sent_request': sent_match_request, 
         'received_request': received_match_request, 
         'is_pal': is_pal,
-        'lang_list': lang_list_decoded
+        'lang_list': lang_list_decoded,
+        'country': profile.country_get_as_string()
         }
     return render(request, 'basic_interface/profile_other.html', context)
 
@@ -162,7 +163,8 @@ def edit_info(request):
             profile.save()
             Profile.languages_set_from_list(profile, languages)
             
-            return redirect('profile')
+            messages.success(request, 'Information updated')
+            return redirect('edit_info')
     else:
         user= request.user
         profile= user.profile
@@ -200,6 +202,8 @@ def edit_password(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
+            messages.success(request, 'Password updated')
+            return redirect('edit_password')
     
     form= PasswordChangeForm(user=request.user)
     context= {'form': form}
