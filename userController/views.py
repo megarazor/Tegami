@@ -120,7 +120,7 @@ def register(request):
 
 @login_required
 def settings(request):
-    return render(request, 'settings/settings.html')
+    return redirect('edit_info')
 
 @login_required
 def edit_info(request):
