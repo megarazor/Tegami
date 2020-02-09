@@ -9,7 +9,7 @@ from .models import Profile
 from matching.models import MatchRequest, PalList
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'basic_interface/home.html')
 
 def logging_in(request):
     if request.method == 'POST':
@@ -42,7 +42,7 @@ def profile(request):
     for lang in lang_list:
         lang_list_decoded.append(LANGUAGE_CODE[lang])
     context= {'profile': profile, 'lang_list': lang_list_decoded}
-    return render(request, 'profile.html', context)
+    return render(request, 'basic_interface/profile.html', context)
 
 @login_required
 def profile_other(request, username):
@@ -71,7 +71,7 @@ def profile_other(request, username):
         'is_pal': is_pal,
         'lang_list': lang_list_decoded
         }
-    return render(request, 'profile_other.html', context)
+    return render(request, 'basic_interface/profile_other.html', context)
 
 def register(request):
     if (request.method=='POST'):
@@ -79,11 +79,6 @@ def register(request):
         profile_form= ProfileForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
-            user= user_form.save()
-            profile= profile_form.save(commit=False)
-            profile.user= user
-            profile.save()
-
             language1= profile_form.cleaned_data['language1']
             language2= profile_form.cleaned_data['language2']
             language3= profile_form.cleaned_data['language3']
@@ -100,6 +95,15 @@ def register(request):
                 languages.append(language4)
             if language5 != '--':
                 languages.append(language5)
+            if len(languages) == 0:
+                messages.error(request, 'Please input at least one language')
+                return redirect('register')
+            
+            user= user_form.save()
+            profile= profile_form.save(commit=False)
+            profile.user= user
+            profile.save()
+
             Profile.languages_set_from_list(profile, languages)
 
             username= user_form.cleaned_data.get('username')
@@ -112,7 +116,7 @@ def register(request):
         profile_form= ProfileForm()
     
     context= {'user_form': user_form, 'profile_form': profile_form}
-    return render(request, 'register.html', context)
+    return render(request, 'basic_interface/register.html', context)
 
 @login_required
 def settings(request):
@@ -125,6 +129,25 @@ def edit_info(request):
         profile_form= ProfileForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
+            languages= []
+            language1= profile_form.cleaned_data['language1']
+            language2= profile_form.cleaned_data['language2']
+            language3= profile_form.cleaned_data['language3']
+            language4= profile_form.cleaned_data['language4']
+            language5= profile_form.cleaned_data['language5']
+            if language1 != '--':
+                languages.append(language1)
+            if language2 != '--':
+                languages.append(language2)
+            if language3 != '--':
+                languages.append(language3)
+            if language4 != '--':
+                languages.append(language4)
+            if language5 != '--':
+                languages.append(language5)
+            if len(languages) == 0:
+                messages.error(request, 'Please enter at least one language')
+                return redirect('edit_info')
             profile= Profile.objects.get(user=request.user)
             profile.user.email= user_form.cleaned_data.get('email')
             profile.user.first_name= user_form.cleaned_data.get('first_name')
@@ -137,28 +160,24 @@ def edit_info(request):
             profile.profile_pic= profile_form.cleaned_data.get('profile_pic')
             profile.user.save()
             profile.save()
-            language1= profile_form.cleaned_data['language1']
-            language2= profile_form.cleaned_data['language2']
-            language3= profile_form.cleaned_data['language3']
-            language4= profile_form.cleaned_data['language4']
-            language5= profile_form.cleaned_data['language5']
-            languages= []
-            if language1 != '--':
-                languages.append(language1)
-            if language2 != '--':
-                languages.append(language2)
-            if language3 != '--':
-                languages.append(language3)
-            if language4 != '--':
-                languages.append(language4)
-            if language5 != '--':
-                languages.append(language5)
             Profile.languages_set_from_list(profile, languages)
             
             return redirect('profile')
     else:
-        user_form= ExtendedUserEditionForm()
-        profile_form= ProfileForm()
+        user= request.user
+        profile= user.profile
+        user_form= ExtendedUserEditionForm(initial={
+            'email': user.email, 
+            'first_name': user.first_name,
+            'last_name': user.last_name
+            })
+        profile_form= ProfileForm(initial={
+            'DoB': profile.DoB,
+            'gender': profile.gender,
+            'country': profile.country,
+            'address': profile.address,
+            'intro': profile.intro,
+            'profile_pic': profile.profile_pic})
     
     context= {'user_form': user_form, 'profile_form': profile_form}
     return render(request, 'settings/info.html', context)
@@ -184,5 +203,4 @@ def notifications_view(request):
             noti.read=True
             noti.save()
     context= {'notifications': notifications}
-    return render(request, 'notifications.html', context)
-
+    return render(request, 'basic_interface/notifications.html', context)
