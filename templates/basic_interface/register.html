@@ -1,4 +1,4 @@
-{% extends "./common/template.html" %}
+{% extends "./../common/template.html" %}
 
 {% block content %}
 
@@ -8,6 +8,12 @@
     </br>
         <h2>Register</h2>
         </br>
+        {% for message in messages %}
+        <div class="alert">
+            {{ message }}
+        </div>
+        <br>
+        {% endfor %}
         <form method="POST" action="{% url 'register' %}">
             {% csrf_token %}
             {{ user_form.as_p }}

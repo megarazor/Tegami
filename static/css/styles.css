@@ -1,15 +1,3 @@
-{# template for user side site #}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<!-- <link rel="stylesheet" type="text/css" href="./../common/styles.css"/> -->
-
-<!-- <style>
 /* From w3schools.com */
 
 * {
@@ -181,83 +169,25 @@ background: #086b72;
 color: white;
 }
 
-/* The sidebar menu */
-.sidenav {
-height: 100%; /* Full-height: remove this if you want "auto" height */
-width: 160px; /* Set the width of the sidebar */
-position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-z-index: 1; /* Stay on top */
-top: 0; /* Stay at the top */
-left: 0;
-background-color: #111; /* Black */
-overflow-x: hidden; /* Disable horizontal scroll */
-padding-top: 20px;
+/* Columns */
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
 }
 
-/* The navigation menu links */
-.sidenav a {
-padding: 6px 8px 6px 16px;
-text-decoration: none;
-font-size: 25px;
-color: #818181;
-display: block;
+.left {
+  width: 25%;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-color: #f1f1f1;
+.right {
+  width: 75%;
 }
 
-/* Style page content */
-.main {
-margin-left: 160px; /* Same as the width of the sidebar */
-padding: 0px 10px;
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-.sidenav {padding-top: 15px;}
-.sidenav a {font-size: 18px;}
-}
-</style> -->
-
-</head>
-<body>
-  <!-- <img src="{% static 'images/cursed.jpg' %}" alt="My image"> -->
-<a href="{% url 'home' %}" style="text-decoration: none;">
-<div class="header">
-  <h1>Tegami</h1>
-  <p>Connects people with paper letters.</p>
-</div></a>
-
-<div class="navbar">
-  <a href="{% url 'home' %}">Home</a>
-  <a href="{% url 'profile' %}">Profile</a>
-  <a href="{% url 'current_pals' %}">Your Pen Pals</a>
-  <a href="{% url 'matching_query' %}">Find someone new</a>
-  {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="right">Logout</a>
-    <a href="{% url 'edit_info' %}" class="right">Settings</a>
-    <a href="{% url 'notifications' %}" class="right">Notifications({{ user.profile.count_unread_notis }})</a>
-    <a href="{% url 'profile' %}" class="right">Welcome, {{ user.first_name }}!</a>
-  {% else %}
-    <a href="{% url 'register' %}" class="right">Register</a>
-    <a href="{% url 'login' %}" class="right">Login</a>
-  {% endif %}
-
-</div>
-
-<div>
-    {% block content %}{% endblock %}
-</div>
-
-<div class="footer">
-  <h3>Tegami – a personal project</h3>
-  Contact: PHAM Van Nam <br>
-  Email: vannampham1301@gmail.com<br>
-  Phone: (+81)080-8750-5337
-
-</div>
-
-</body>
-</html>
