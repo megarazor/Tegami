@@ -1,5 +1,9 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>Your Pen Pals | Tegami</title>
+{% endblock %}
+
 {% block content %}
     <h1>Your matched Pen Pals</h1>
     {% if pal_list %}

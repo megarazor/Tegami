@@ -1,5 +1,9 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>Find you Pen Pals | Tegami</title>
+{% endblock %}
+
 {% block content %}
     <h1>List of Pen Pals for you</h1>
     {% csrf_token %}

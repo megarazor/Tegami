@@ -1,5 +1,9 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>Notifications | Tegami</title>
+{% endblock %}
+
 {% block content %}
     <h1>Notifications</h1>
     {% csrf_token %}

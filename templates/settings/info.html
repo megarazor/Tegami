@@ -1,7 +1,10 @@
 {% extends "./../common/settings_base.html" %}
 
-{% block settings_content %}
+{% block extra_head_content %}
+  <title>Information Update | Tegami</title>
+{% endblock %}
 
+{% block settings_content %}
 
 {% for message in messages %}
 <div class="alert">

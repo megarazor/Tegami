@@ -1,5 +1,9 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>Confirm | Tegami</title>
+{% endblock %}
+
 {% block content %}
 
 <h1>You've sent {{ receiver.user.first_name }} {{ receiver.user.last_name }} a Pen Pal request.</h1>

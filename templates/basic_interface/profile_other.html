@@ -1,5 +1,9 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>{{profile.user.first_name}} {{ profile.user.last_name }} | Tegami</title>
+{% endblock %}
+
 {% block content %}
 
     {% csrf_token %}

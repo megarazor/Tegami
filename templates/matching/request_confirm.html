@@ -1,5 +1,9 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>Confirm | Tegami</title>
+{% endblock %}
+
 {% block content %}
     <h1>Are you sure you want to send {{ profile.user.first_name }} a Pen Pal request?</h1>
     {% if profile.gender == 0 %}
