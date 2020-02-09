@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileForm, LANGUAGE_CODE
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, LANGUAGE_SLOT_NUM
 from matching.models import MatchRequest, PalList
 
 def home(request):
@@ -171,7 +171,18 @@ def edit_info(request):
             'first_name': user.first_name,
             'last_name': user.last_name
             })
+        lang_list= profile.languages_get_as_list()
+        missing_slot_num= LANGUAGE_SLOT_NUM - len(lang_list)
+        for _ in range(missing_slot_num):
+            # print("*** APPEND")
+            lang_list.append('--')
+
         profile_form= ProfileForm(initial={
+            'language1': lang_list[0],
+            'language2': lang_list[1],
+            'language3': lang_list[2],
+            'language4': lang_list[3],
+            'language5': lang_list[4],
             'DoB': profile.DoB,
             'gender': profile.gender,
             'country': profile.country,

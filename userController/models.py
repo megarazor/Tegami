@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # from matching.models import SpokenLanguages
 
+LANGUAGE_SLOT_NUM= 5
+
 class Notifications(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     time= models.DateTimeField()

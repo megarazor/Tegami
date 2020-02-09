@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile
 
 CHOICES= [('--', 'None'), ('en', 'English'), ('ja', '日本語'), ('vi', 'Tiếng Việt')]
-LANGUAGE_CODE= {'--': None, 'en': 'English', 'ja': '日本語', 'vi': 'Tiếng Việt'}
+LANGUAGE_CODE= {'--': 'None', 'en': 'English', 'ja': '日本語', 'vi': 'Tiếng Việt'}
 
 class ExtendedUserCreationForm(UserCreationForm):
     email= forms.EmailField(required=True)
