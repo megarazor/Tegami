@@ -1,5 +1,23 @@
 {% extends "./../common/template.html" %}
 
+{% block extra_head_content %}
+  <title>Homepage | Tegami</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+    /* Slideshow style */
+    .mySlides {display:none}
+    .w3-left, .w3-right, .w3-badge {cursor:pointer}
+    .w3-badge {height:13px;width:13px;padding:0}
+    .slide_panel {
+      padding: 160px;
+      text-align: center;
+      background: #086b72;
+      color: white;
+    }
+  </style>
+{% endblock %}
+
+
 {% block content %}
 
 <div class="w3-content w3-display-container" style="max-width:1920px">
@@ -58,17 +76,6 @@ function carousel() {
   myIndex++;
   setTimeout(carousel, 2000); 
 }
-// function carousel() {
-//   var i;
-//   var x = document.getElementsByClassName("mySlides");
-//   for (i = 0; i < x.length; i++) {
-//     x[i].style.display = "none";  
-//   }
-//   myIndex++;
-//   if (myIndex > x.length) {myIndex = 1}    
-//   x[myIndex-1].style.display = "block";  
-//   setTimeout(carousel, 2000); // Change image every 2 seconds
-// }
 </script>
 
 

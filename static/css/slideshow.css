@@ -1,0 +1,14 @@
+/* Slideshow style */
+.mySlides {display:none}
+.w3-left, .w3-right, .w3-badge {cursor:pointer}
+.w3-badge {height:13px;width:13px;padding:0}
+.slide_panel {
+  padding: 160px;
+  text-align: center;
+  background: #086b72;
+  color: white;
+}
+
+/* W3.CSS 4.13 June 2019 by Jan Egil and Borge Refsnes */
+.w3-content,.w3-auto{margin-left:auto;margin-right:auto}.w3-content{max-width:980px}.w3-auto{max-width:1140px}
+.w3-display-container{position:relative}
