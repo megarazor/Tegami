@@ -212,7 +212,7 @@ def edit_password(request):
 @login_required
 def notifications_view(request):
     current_user= request.user
-    notifications= current_user.notifications.all()
+    notifications= current_user.notifications.all().order_by('-time')
     for noti in notifications:
         if noti.read==False:
             noti.read=True
