@@ -1,1 +1,1 @@
-web: gunicorn tegami.wsgi
+web: gunicorn Letter.wsgi
