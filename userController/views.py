@@ -187,7 +187,7 @@ def edit_info(request):
             'language3': lang_list[2],
             'language4': lang_list[3],
             'language5': lang_list[4],
-            'DoB': profile.DoB,
+            'DoB': str(profile.DoB.month) + '/' + str(profile.DoB.day) + '/' + str(profile.DoB.year),
             'gender': profile.gender,
             'country': profile.country,
             'address': profile.address,

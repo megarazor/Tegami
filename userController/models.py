@@ -533,8 +533,8 @@ class Profile(models.Model):
     intro = models.TextField(max_length=500, blank=True)
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES, default='JP')
     address = models.CharField(max_length=100, blank=True)
-    DoB = models.DateField(null=True, blank=True)
-    profile_pic = models.CharField(max_length=500, blank=True)
+    DoB = models.DateField(null=True, blank=True, verbose_name="Date of birth (mm/dd/yyyy format)")
+    profile_pic = models.CharField(max_length=500, blank=True, verbose_name='URL to your Profile Picture')
     spoken_languages= models.CharField(max_length=100, default="en")
 
     def __str__(self):
