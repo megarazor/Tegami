@@ -10,6 +10,7 @@ import datetime
 def current_pals(request):
     current_profile= Profile.objects.get(user=request.user)
     pal_list, created = PalList.objects.get_or_create(profile=current_profile)
+    p_num= pal_list.pal_list.all().count()
     p_list= pal_list.pal_list.all()
 
     ages= []
@@ -19,7 +20,7 @@ def current_pals(request):
         countries.append(p.country_get_as_string())
     p_list_detailed= zip(p_list, ages, countries)
     print(p_list)
-    context= {'pal_list': p_list_detailed}
+    context= {'pal_list': p_list_detailed, 'pal_num': p_num}
     return render(request, 'matching/current.html', context)
 
 @login_required

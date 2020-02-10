@@ -8,7 +8,7 @@
 
 <div class="main">
     <h1>Your matched Pen Pals</h1>
-    {% if pal_list.all %}
+    {% if pal_num > 0 %}
     <table>
         {% for pal, age, country in pal_list %}
         <tr>
