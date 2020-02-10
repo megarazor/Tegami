@@ -1,3 +1,6 @@
+# Virtual environment files #
+heroku_env
+
 # Django #
 *.log
 *.pot
