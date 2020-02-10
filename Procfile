@@ -1,0 +1,1 @@
+web: gunicorn tegami.wsgi --log-file -
