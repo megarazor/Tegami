@@ -8,7 +8,7 @@
 <div class="main">
     <h1>List of Pen Pals for you</h1>
     {% csrf_token %}
-    {% if matches %}
+    {% if matches_num > 0 %}
     <table>
         {% for match, age, country in matches %}
         <tr>

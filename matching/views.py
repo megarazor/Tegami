@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .models import PalList, MatchRequest
 from django.contrib.auth.decorators import login_required
 import datetime
+from .forms import MatchQueryForm
 
 @login_required
 def current_pals(request):
@@ -19,16 +20,16 @@ def current_pals(request):
         ages.append(p.get_age())
         countries.append(p.country_get_as_string())
     p_list_detailed= zip(p_list, ages, countries)
-    print(p_list)
     context= {'pal_list': p_list_detailed, 'pal_num': p_num}
     return render(request, 'matching/current.html', context)
 
 @login_required
 def matching(request, country, gender, min_age, max_age, lang_list):
+    print("*** QUERY: ", country, gender, min_age, max_age, lang_list)
     matches= Profile.objects.exclude(user=request.user)
     if country != '--': # Filter by country
         matches= matches.filter(country=country)
-    if gender != '2': # Filter by gender
+    if gender != '-1': # Filter by gender
         matches= matches.filter(gender=gender)
     to_be_exclude= []
     # today=datetime.date.today()
@@ -65,13 +66,14 @@ def matching(request, country, gender, min_age, max_age, lang_list):
             elif PalList.is_pal(current_profile, match):
                 to_be_exclude.append(match.id)
     matches= matches.exclude(id__in=to_be_exclude)
+    matches_num= matches.count()
     ages= []
     countries= []
     for match in matches:
         ages.append(match.get_age())
         countries.append(match.country_get_as_string())
     matches_n_ages= zip(matches, ages, countries)
-    context= {'matches': matches_n_ages}
+    context= {'matches': matches_n_ages, 'matches_num': matches_num}
     return render(request, 'matching/results.html', context)
 
 @login_required
@@ -132,42 +134,50 @@ def respond_match_request(request, request_id, verb):
             match_request.receiver.user.username + " has accepted your Pen Pal request.",
             "/account/profile/" +  match_request.receiver.user.username)
         match_request.delete()
+        return redirect('current_pals')
     else:
         send_notification(
             match_request.requester.user.username, 
             match_request.receiver.user.username + " has declined your Pen Pal request.",
             "/account/profile/" +  match_request.receiver.user.username)
         match_request.delete()
-    return redirect('current_pals')
-
+        return redirect('profile_other', match_request.requester.user.username)
+    
 @login_required
 def matching_query(request):
     if request.method == 'POST':
-        country = request.POST['country']
-        gender = request.POST['gender']
-        min_age = request.POST['min_age']
-        if min_age == '':
-            min_age= 18
-        max_age = request.POST['max_age']
-        if max_age == '':
-            max_age= 150
-        lang_list= ""
-        if request.POST['language1'] != '--':
-            lang_list+= request.POST['language1'] + ','
-        if request.POST['language2'] != '--':
-            lang_list+= request.POST['language2'] + ','
-        if request.POST['language3'] != '--':
-            lang_list+= request.POST['language3'] + ','
-        if request.POST['language4'] != '--':
-            lang_list+= request.POST['language4'] + ','
-        if request.POST['language5'] != '--':
-            lang_list+= request.POST['language5'] + ','
-        if lang_list == "":
-            lang_list= 'none'
+        query_form= MatchQueryForm(request.POST)
+        if query_form.is_valid():
+            country = query_form.cleaned_data['country']
+            gender = query_form.cleaned_data['gender']
+            min_age = query_form.cleaned_data['min_age']
+            max_age= query_form.cleaned_data['max_age']
+            language1= query_form.cleaned_data['language1']
+            language2= query_form.cleaned_data['language2']
+            language3= query_form.cleaned_data['language3']
+            language4= query_form.cleaned_data['language4']
+            language5= query_form.cleaned_data['language5']
+            lang_list= ""
+            if language1 != '--':
+                lang_list+= language1 + ','
+            if language2 != '--':
+                lang_list+= language2 + ','
+            if language3 != '--':
+                lang_list+= language3 + ','
+            if language4 != '--':
+                lang_list+= language4 + ','
+            if language5 != '--':
+                lang_list+= language5 + ','
+            if lang_list == "":
+                lang_list= 'none'
+            else:
+                lang_list= lang_list[:-1]
+            return redirect('matching', country, gender, min_age, max_age, lang_list)
         else:
-            lang_list= lang_list[:-1]
-        return redirect('matching', country, gender, min_age, max_age, lang_list)
-    return render(request, 'matching/query.html')
+            return redirect('matching_query')
+    query_form= MatchQueryForm(initial={'max_age': 150})
+    context= {'query_form': query_form}
+    return render(request, 'matching/query.html', context)
 
 @login_required
 def matching_remove(request, username):

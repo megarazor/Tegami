@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile
 
-CHOICES= [
+LANGUAGE_CHOICES= [
     ('--', 'None'),
     ('aa', 'Afar'),
     ('ab', 'Abkhazian'),
@@ -399,11 +399,11 @@ class ExtendedUserCreationForm(UserCreationForm):
         return user
 
 class ProfileForm(forms.ModelForm):
-    language1= forms.ChoiceField(choices=CHOICES)
-    language2= forms.ChoiceField(choices=CHOICES)
-    language3= forms.ChoiceField(choices=CHOICES)
-    language4= forms.ChoiceField(choices=CHOICES)
-    language5= forms.ChoiceField(choices=CHOICES)
+    language1= forms.ChoiceField(label="Language 1", choices=LANGUAGE_CHOICES)
+    language2= forms.ChoiceField(label="Language 2", choices=LANGUAGE_CHOICES)
+    language3= forms.ChoiceField(label="Language 3", choices=LANGUAGE_CHOICES)
+    language4= forms.ChoiceField(label="Language 4", choices=LANGUAGE_CHOICES)
+    language5= forms.ChoiceField(label="Language 5", choices=LANGUAGE_CHOICES)
     class Meta:
         model= Profile
         fields= ('DoB', 'gender', 'country', 'address', 'intro', 'profile_pic') 

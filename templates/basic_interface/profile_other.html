@@ -19,8 +19,10 @@
             <br>
             {% if profile.gender == 0 %}
                 Gender: Female
-            {% else %}
+            {% elif profile.gender == 1 %}
                 Gender: Male
+            {% else %}
+                Gender: Other
             {% endif %}
             <br>
             From: {{ country }}

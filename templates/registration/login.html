@@ -2,28 +2,37 @@
 
 {% block extra_head_content %}
   <title>Login | Tegami</title>
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'css/columns.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="main">
-  <h1>Log in</h1>
-  <form method = "post">
-    {% csrf_token %}
-    {% for message in messages %}
-      <div class="alert">
-          {{ message }}
+
+<div class="col-container">
+  <div class="col-colored col-settings-left">
+      <h2><a href="{% url 'login' %}" style="text-decoration: none;">Login</a></h2>
+  </div>
+  <div class="col col-settings-right">
+    <form method = "post">
+      {% csrf_token %}
+      {% for message in messages %}
+        <div class="alert">
+            {{ message }}
+        </div>
+      {% endfor %}
+      <div>
+        <span>Username</span>
+        <input type="text" name="username" autofocus="" required="" id="id_username">
       </div>
-    {% endfor %}
-    <div>
-      <span>Username</span>
-      <input type="text" name="username" autofocus="" required="" id="id_username">
-    </div>
-    <div>
-      <span>Password</span>
-      <input type="password" name="password" autofocus="" required="" id="id_password">
-    </div>
-    <button type="submit">Log in</button>
-  </form>
+      <div>
+        <span>Password</span>
+        <input type="password" name="password" autofocus="" required="" id="id_password">
+      </div>
+      <input type="submit" value="Log in">
+    </form>
+  </div>
 </div>
+
   
 {% endblock %}

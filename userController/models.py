@@ -518,6 +518,8 @@ COUNTRY_CHOICES= [
     ('ZW', 'Zimbabwe')
 ]
 
+GENDER_CHOICES = [(0, 'Female'), (1, 'Male'), (2, 'Other')]
+
 class Notifications(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     time= models.DateTimeField()
@@ -527,11 +529,7 @@ class Notifications(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-
-    GENDER_FEMALE = 0
-    GENDER_MALE = 1
-    GENDER_CHOICES = [(GENDER_FEMALE, 'Female'), (GENDER_MALE, 'Male')]
-    gender = models.IntegerField(choices=GENDER_CHOICES, default=GENDER_MALE)
+    gender = models.IntegerField(choices=GENDER_CHOICES, default=1)
     intro = models.TextField(max_length=500, blank=True)
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES, default='JP')
     address = models.CharField(max_length=100, blank=True)
