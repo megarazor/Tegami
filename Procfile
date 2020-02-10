@@ -1,1 +1,1 @@
-web: gunicorn Letter.wsgi
+web: gunicorn config.wsgi
