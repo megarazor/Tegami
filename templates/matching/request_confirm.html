@@ -5,13 +5,14 @@
 {% endblock %}
 
 {% block content %}
+<div class="main">
     <h1>Are you sure you want to send {{ profile.user.first_name }} a Pen Pal request?</h1>
     {% if profile.gender == 0 %}
         <p>If she agrees to your request, we'll notify you and her address will be visible on her profile. Also, your address will be visible to {{ profile.user.first_name }} on your profile.</p>
     {% else %}
         <p>If he agrees to your request, we'll notify you and his address will be visible on his profile. Also, your address will be visible to {{ profile.user.first_name }} on your profile.</p>
     {% endif %}
-    <a href="{% url 'send_match_request' profile.user.username %}">Send Pen Pal request</a> or <a href="../">Cancel</a>
-
+    <a href="{% url 'send_match_request' profile.user.username %}">Send Pen Pal request</a> or <a href="{% url 'profile_other' profile.user.username %}">Cancel</a>
+</div>
   
 {% endblock %}

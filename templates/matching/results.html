@@ -5,14 +5,33 @@
 {% endblock %}
 
 {% block content %}
+<div class="main">
     <h1>List of Pen Pals for you</h1>
     {% csrf_token %}
     {% if matches %}
-        {% for match in matches %}
-            <p><img src="{{ match.profile_pic }}" alt="" width="100px", height="100px"> <a href="{% url 'profile_other' match.user.username %}">{{ match.user.first_name }} {{ match.user.last_name }}</a></p>
+    <table>
+        {% for match, age, country in matches %}
+        <tr>
+            <td><a href="{% url 'profile_other' match.user.username %}"><img class="center-cropped-small" src="{{ match.profile_pic }}" alt=""></a></td>
+            <td>
+                <a href="{% url 'profile_other' match.user.username %}">{{ match.user.first_name }} {{ match.user.last_name }}</a>
+                <br>
+                <div class="annotation">
+                    {% load static %}
+                    {% if match.gender == 0 %}
+                        <img class="icon" src="{% static 'images/gender_female.png' %}" alt="">
+                    {% else %}
+                        <img class="icon" src="{% static 'images/gender_male.png' %}" alt="">
+                    {% endif %}
+                    {{ age }}, from {{ country }}
+                </div>
+            </td>
+        </tr>
         {% endfor %}
+      </table>
     {% else %}
         <p>No candidates to display.</p>
     {% endif %}
+</div>
   
 {% endblock %}

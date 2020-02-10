@@ -5,21 +5,22 @@
 {% endblock %}
 
 {% block content %}
+<div class="main">
+  <h1>Register</h1>
 
-<h2>Register</h2>
+  {% for message in messages %}
+  <div class="alert">
+      {{ message }}
+  </div>
+  {% endfor %}
 
-{% for message in messages %}
-<div class="alert">
-    {{ message }}
+  <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
+      {{ user_form.as_p }}
+      {{ profile_form.as_p }}
+      <input type="submit" value= "Register Your Account">
+  </form>
 </div>
-{% endfor %}
-
-<form method="POST" action="{% url 'register' %}">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <input type="submit" value= "Register Your Account">
-</form>
 
 
     

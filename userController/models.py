@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import datetime
 
 COUNTRY_CODE= {'--': 'None', 'US': 'United States of America', 'JP': 'Japan', 'VN': 'Vietnam'}
 LANGUAGE_SLOT_NUM= 5
@@ -52,3 +53,9 @@ class Profile(models.Model):
     
     def country_get_as_string(self):
         return COUNTRY_CODE[self.country]
+
+    def get_age(self):
+        born= self.DoB
+        today= datetime.date.today()
+        age= today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+        return age

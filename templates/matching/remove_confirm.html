@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="main">
     <h1>Are you sure remove {{ profile.user.first_name }} from your list?</h1>
     {% if profile.gender == 0 %}
         <p>You will also be removed from her list.</p>
@@ -12,6 +13,6 @@
         <p>You will also be removed from his list.</p>
     {% endif %}
     <a href="{% url 'matching_remove' profile.user.username %}">Remove</a> or <a href="{% url 'profile_other' profile.user.username %}">Cancel</a>
-
+</div>
   
 {% endblock %}

@@ -5,25 +5,25 @@
 {% endblock %}
 
 {% block content %}
-<h1>Log in</h1>
-</br>
-<form method = "post">
-  {% csrf_token %}
-  {% for message in messages %}
-    <div class="alert">
-        {{ message }}
+<div class="main">
+  <h1>Log in</h1>
+  <form method = "post">
+    {% csrf_token %}
+    {% for message in messages %}
+      <div class="alert">
+          {{ message }}
+      </div>
+    {% endfor %}
+    <div>
+      <span>Username</span>
+      <input type="text" name="username" autofocus="" required="" id="id_username">
     </div>
-  {% endfor %}
-  <div class="input-group mb-3">
-    <span class="input-group-text">Username</span>
-    <input class="form-control" type="text" name="username" autofocus="" required="" id="id_username">
-  </div>
-    
-  <div class="input-group mb-3">
-    <span class="input-group-text">Password</span>
-    <input class="form-control" type="password" name="password" autofocus="" required="" id="id_password">
-  </div>
-  <button type="submit" class="btn btn-primary">Log in</button>
-</form>
+    <div>
+      <span>Password</span>
+      <input type="password" name="password" autofocus="" required="" id="id_password">
+    </div>
+    <button type="submit">Log in</button>
+  </form>
+</div>
   
 {% endblock %}
