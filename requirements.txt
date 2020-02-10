@@ -15,7 +15,9 @@ Click==7.0
 constantly==15.1.0
 cryptography==2.8
 daphne==2.4.0
+dj-database-url==0.5.0
 Django==3.0
+django-heroku==0.3.1
 Flask==1.1.1
 gunicorn==20.0.4
 hiredis==1.0.1
@@ -29,6 +31,7 @@ lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 msgpack==0.6.2
+psycopg2==2.8.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
 pycosat==0.6.3

@@ -7,8 +7,10 @@ from .forms import ExtendedUserCreationForm, ExtendedUserEditionForm, ProfileFor
 from django.contrib.auth.models import User
 from .models import Profile, LANGUAGE_SLOT_NUM
 from matching.models import MatchRequest, PalList
+# from django.core.urlresolvers import resolve
 
 def home(request):
+    print("*** ", request.resolver_match.app_name)
     return render(request, 'basic_interface/home.html')
 
 def logging_in(request):
