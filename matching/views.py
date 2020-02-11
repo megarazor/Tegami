@@ -25,7 +25,6 @@ def current_pals(request):
 
 @login_required
 def matching(request, country, gender, min_age, max_age, lang_list):
-    print("*** QUERY: ", country, gender, min_age, max_age, lang_list)
     matches= Profile.objects.exclude(user=request.user)
     if country != '--': # Filter by country
         matches= matches.filter(country=country)

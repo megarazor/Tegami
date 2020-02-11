@@ -10,7 +10,6 @@ from matching.models import MatchRequest, PalList
 # from django.core.urlresolvers import resolve
 
 def home(request):
-    print("*** ", request.resolver_match.app_name)
     return render(request, 'basic_interface/home.html')
 
 def logging_in(request):
