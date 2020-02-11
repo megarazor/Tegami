@@ -532,9 +532,9 @@ class Profile(models.Model):
     gender = models.IntegerField(choices=GENDER_CHOICES, default=1)
     intro = models.TextField(max_length=500, blank=True)
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES, default='JP')
-    address = models.CharField(max_length=100, blank=True)
-    DoB = models.DateField(null=True, blank=True, verbose_name="Date of birth (mm/dd/yyyy format)")
-    profile_pic = models.CharField(max_length=500, blank=True, verbose_name='URL to your Profile Picture')
+    address = models.CharField(max_length=100)
+    DoB = models.DateField(verbose_name="Date of birth (mm/dd/yyyy format)")
+    profile_pic = models.CharField(max_length=500, blank=True, verbose_name='URL to your Profile Picture', default="https://i.imgur.com/ndkX0PN.png")
     spoken_languages= models.CharField(max_length=100, default="en")
 
     def __str__(self):

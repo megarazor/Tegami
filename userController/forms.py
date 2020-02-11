@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import Textarea, TextInput
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile
@@ -387,6 +388,12 @@ class ExtendedUserCreationForm(UserCreationForm):
     class Meta:
         model= User
         fields= ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+        widgets= {
+            'username': TextInput(attrs={'placeholder': 'my_username'}),
+            'email': TextInput(attrs={'placeholder': 'example@mailservice.com'}),
+            'first_name': TextInput(attrs={'placeholder': 'Your given name'}),
+            'last_name': TextInput(attrs={'placeholder': 'Your family name'}),
+        }
 
     def save(self, commit=True):
         user= super().save(commit=False)
@@ -407,6 +414,12 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model= Profile
         fields= ('DoB', 'gender', 'country', 'address', 'intro', 'profile_pic') 
+        widgets = {
+            'intro': Textarea(attrs={'placeholder': "What kind of person are you?"}),
+            'DoB': TextInput(attrs={'placeholder': '01/01/2000'}),
+            'profile_pic': TextInput(attrs={'placeholder': 'https://i.imgur.com/ndkX0PN.png'}),
+            'Address': TextInput(attrs={'placeholder': '115-0053 Tokyo-to, Kita-ku, Akabanedai 1-7-11'}),
+        }
 
 class ExtendedUserEditionForm(UserChangeForm):
     email= forms.EmailField(required=True)
