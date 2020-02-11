@@ -220,7 +220,12 @@ def edit_password(request):
             update_session_auth_hash(request, form.user)
             messages.success(request, 'Password updated')
             return redirect('edit_password')
-    
+        else:
+            if form.cleaned_data.get('new_password1') != form.cleaned_data.get('new_password2'):
+                messages.error(request, 'Two new passwords didn\'t match, please try again.')
+            else:
+                messages.error(request, 'Failed. Inputted old password was wrong, or you new password doesn\'t meet the requirements.')
+            return redirect('edit_password')
     form= PasswordChangeForm(user=request.user)
     context= {'form': form}
     return render(request, 'settings/password.html', context)

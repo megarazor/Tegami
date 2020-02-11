@@ -23,15 +23,19 @@
 </div></a>
 
 <div class="navbar">
-  <a href="{% url 'home' %}">Home</a>
-  <a href="{% url 'profile' %}">Profile</a>
-  <a href="{% url 'current_pals' %}">Your Pen Pals</a>
-  <a href="{% url 'matching_query' %}">Find someone new</a>
+  {% load static %}
+  <a href="{% url 'home' %}"><img src="{% static 'images/HomeIcon.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Home</span></a>
+  <a href="{% url 'current_pals' %}"><img src="{% static 'images/PalListIcon.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Your Pen Pals</span></a>
+  <a href="{% url 'matching_query' %}"><img src="{% static 'images/NewPalIcon.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Find someone new</span></a>
   {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="right">Logout</a>
-    <a href="{% url 'settings' %}" class="right">Settings</a>
-    <a href="{% url 'notifications' %}" class="right">Notifications({{ user.profile.count_unread_notis }})</a>
+    <a href="{% url 'logout' %}" class="right"><img src="{% static 'images/Logout.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Logout</span></a>
+    <a href="{% url 'settings' %}" class="right"><img src="{% static 'images/Settings.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Settings</span></a>
     <a href="{% url 'profile' %}" class="right">Welcome, {{ user.first_name }}!</a>
+    {% if user.profile.count_unread_notis > 0 %}
+      <a href="{% url 'notifications' %}" class="right"><img src="{% static 'images/Bell_ringing.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Notifications ({{ user.profile.count_unread_notis }})</span></a>
+    {% else %}
+      <a href="{% url 'notifications' %}" class="right"><img src="{% static 'images/Bell_still.png' %}" class="navbar-img" alt=""><span class="navbar-label"> Notifications (0)</span></a>
+    {% endif %}
   {% else %}
     <a href="{% url 'register' %}" class="right">Register</a>
     <a href="{% url 'login' %}" class="right">Login</a>
