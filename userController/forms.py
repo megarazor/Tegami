@@ -381,9 +381,9 @@ LANGUAGE_CODE= {
 }
 
 class ExtendedUserCreationForm(UserCreationForm):
-    email= forms.EmailField(required=True)
-    first_name= forms.CharField(max_length=50)
-    last_name= forms.CharField(max_length=50)
+    # email= forms.EmailField(required=True)
+    # first_name= forms.CharField(max_length=50)
+    # last_name= forms.CharField(max_length=50)
 
     class Meta:
         model= User
@@ -418,14 +418,16 @@ class ProfileForm(forms.ModelForm):
             'intro': Textarea(attrs={'placeholder': "What kind of person are you?"}),
             'DoB': TextInput(attrs={'placeholder': '01/01/2000'}),
             'profile_pic': TextInput(attrs={'placeholder': 'https://i.imgur.com/ndkX0PN.png'}),
-            'Address': TextInput(attrs={'placeholder': '115-0053 Tokyo-to, Kita-ku, Akabanedai 1-7-11'}),
+            'address': TextInput(attrs={'placeholder': "115-0053 Tokyo-to, Kita-ku, Akabanedai 1-7-11"}),
         }
 
 class ExtendedUserEditionForm(UserChangeForm):
-    email= forms.EmailField(required=True)
-    first_name= forms.CharField(max_length=50)
-    last_name= forms.CharField(max_length=50, required=True)
-
     class Meta:
         model= User
         fields= ('email', 'first_name', 'last_name')
+        widgets= {
+            'username': TextInput(attrs={'placeholder': 'my_username'}),
+            'email': TextInput(attrs={'placeholder': 'example@mailservice.com'}),
+            'first_name': TextInput(attrs={'placeholder': 'Your given name'}),
+            'last_name': TextInput(attrs={'placeholder': 'Your family name'}),
+        }

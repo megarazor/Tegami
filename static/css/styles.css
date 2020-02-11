@@ -157,9 +157,26 @@ body {
 }
 
 .annotation {
-  font-size: 11px;
+  font-size: 12px;
   font-style: italic;
   padding-left: 12px;
+}
+
+.helptext {
+  font-size: 12px;
+  font-style: italic;
+  padding-left: 12px;
+}
+
+.helptext {
+  font-size: 12px;
+  font-style: italic;
+  padding-left: 12px;
+}
+
+
+.errorlist{
+  color: red;
 }
 
 .center-cropped-big {
@@ -206,3 +223,4 @@ tr:nth-child(even) {
   color:white;
   background-color: #1abc9c;
 }
+
