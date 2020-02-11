@@ -132,6 +132,21 @@ def edit_info(request):
         profile_form= ProfileForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
+            field_left_empty= []
+            if user_form.cleaned_data.get('email') == '':
+                field_left_empty.append('"Email"')
+            if user_form.cleaned_data.get('first_name') == '':
+                field_left_empty.append('"First name"')
+            if user_form.cleaned_data.get('last_name') == '':
+                field_left_empty.append('"Last name"')
+            if len(field_left_empty) > 0:
+                error= "You can't leave "
+                for field in field_left_empty:
+                    error+= field + ", "
+                error= error[:-2]
+                error+= " empty"
+                messages.error(request, error)
+                return redirect('edit_info')
             languages= []
             language1= profile_form.cleaned_data['language1']
             language2= profile_form.cleaned_data['language2']
