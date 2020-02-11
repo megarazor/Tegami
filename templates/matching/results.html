@@ -12,7 +12,8 @@
     <table>
         {% for match, age, country in matches %}
         <tr>
-            <td><a href="{% url 'profile_other' match.user.username %}"><img class="center-cropped-small" src="{{ match.profile_pic }}" alt=""></a></td>
+            {% load static %}
+            <td><a href="{% url 'profile_other' match.user.username %}"><img class="center-cropped-small" src="{{ match.profile_pic }}" onerror="this.src='{% static 'images/default_profile_pic.png' %}';" alt=""></a></td>
             <td>
                 <a href="{% url 'profile_other' match.user.username %}">{{ match.user.first_name }} {{ match.user.last_name }}</a>
                 <br>

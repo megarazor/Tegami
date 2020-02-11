@@ -12,7 +12,8 @@
     <table>
         {% for pal, age, country in pal_list %}
         <tr>
-            <td><a href="{% url 'profile_other' pal.user.username %}"><img class="center-cropped-small" src="{{ pal.profile_pic }}" alt=""></a></td>
+            {% load static %}
+            <td><a href="{% url 'profile_other' pal.user.username %}"><img class="center-cropped-small" src="{{ pal.profile_pic }}" onerror="this.src='{% static 'images/default_profile_pic.png' %}';" alt=""></a></td>
             <td>
                 <a href="{% url 'profile_other' pal.user.username %}">{{ pal.user.first_name }} {{ pal.user.last_name }}</a>
                 <br>

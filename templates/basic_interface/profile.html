@@ -11,7 +11,7 @@
     <div class="col-container">
         <div class="col-colored col-profile-left">
             <br><br>
-            <img class="center-cropped-big profile-picture" src="{{ profile.profile_pic }}" alt="">  
+            <img class="center-cropped-big profile-picture" src="{{ profile.profile_pic }}" onerror="this.src='{% static 'images/default_profile_pic.png' %}';" alt="Profile picture">
         </div>
         <div class="col col-profile-right">
             <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
