@@ -23,7 +23,6 @@ body {
 
 /* Sticky navbar - toggles between relative and fixed, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it "sticks" in place (like position:fixed). The sticky value is not supported in IE or Edge 15 and earlier versions. However, for these versions the navbar will inherit default position */
 .navbar {
-  vertical-align: middle;
   overflow: hidden;
   background-color: #333;
   position: sticky;
@@ -59,9 +58,9 @@ body {
 .navbar-img {
   height: 24px;
   width: 24px;
-  object-fit:cover;
+  /* object-fit:cover;
   margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px; */
 }
 
 /* Column container */
@@ -123,16 +122,16 @@ body {
     display: none;
   }
   
-  .row {   
+  /* .row {   
     flex-direction: column;
-  }
+  } */
 }
 
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
 @media screen and (max-width: 400px) {
-  .navbar a {
+  /* .navbar a {
     float: none;
-    width: 100%;
+    width: 100%; */
   }
 }
 
